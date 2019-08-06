@@ -6,6 +6,13 @@ module.exports = app =>{
   app.post("/api/stripe", async (req,res) => {
       console.log("req.body :: ", req.body);
 
+      if(!req.user){
+        return res.status(401).send({
+          error: "You must log in!"
+        });
+      }
+
+
     const charge = await stripe.charges.create({
         amount: 500,
         currency: "usd",
